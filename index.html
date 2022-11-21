@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/2ff0678d8a.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="todo-container clearfix">
+    <div class="only_yellow">
+      <div class="container_for_search">
+        <i class="fas fa-search"></i>
+        <input id="search_list_tasks_input" class="search_inpt" type="text">
+      </div>
+    </div>
+    <header class="clearfix">
+      <h1>To-Do List</h1>
+      <h2>Total: <span id="total-tasks">0</span></h2>
+      <h2>Remaining : <span id="tasks-remaining">0</span></h2>
+      <h2>Completed : <span id="completed-tasks">0</span></h2>
+    </header>
+
+    <div class="for_border">
+      <div class="input-container clearfix">
+        <div class="for_sort">
+          <button class="srt srt1" onclick="sortList()">
+            <img src="./assets/Photos/sort.png" alt="">
+          </button>
+          <button class="srt srt2" onclick="sortList()">
+            <img src="./assets/Photos/sort2.png" alt="">
+          </button>
+        </div>
+        <input type="text" id="task-name" />
+        <button class="theme-button"><img src="./assets/Photos/button.png" alt=""></button>
+      </div>
+
+      <div class="task-container clearfix">
+        <ul id="myUl" class="tasks">
+
+        </ul>
+        <button class="reset-btn">Reset</button>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-parent hide">
+    <div class="modal-box">
+      <div class="modal">
+        <span class="modal-close">&times;</span>
+        <h2 id='new-value'>Enter New Value</h2>
+        <input type="text" id="edit-value" />
+        <button id="edit-btn">Update</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal-parent hide">
+    <div class="error-box">
+      <div class="error">
+        <span class="error-close">&times;</span>
+        <h2 id='error-text'></h2>
+        <button class="theme-button theme-button-close" onclick='closeAlert()'>OKAY</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal-parent hide">
+    <div class="confirm-box clearfix">
+      <div class="confirm">
+        <span class="confirm-close">&times;</span>
+        <h2 id='confirm-text'>All entries will be deleted</h2>
+        <button class="theme-button" id='cancel'>Cancel</button>
+        <button class="theme-button btn-confirm" id='proceed'>Yes, Proceed</button>
+      </div>
+    </div>
+  </div>
+  <script src="./assets/js/main.js"></script>
+  <script>
+    function sortList() {
+      let myul,
+        rows,
+        switching,
+        i,
+        x,
+        y,
+        shouldSwitch,
+        dir,
+        switchcount = 0;
+      myul = document.getElementById("myUl");
+      switching = true;
+      dir = "asc";
+      while (switching) {
+        switching = false;
+        rows = myul.getElementsByTagName("li");
+        for (i = 0; i < rows.length - 1; i++) {
+          shouldSwitch = false;
+          x = rows[i];
+          y = rows[i + 1];
+          if (dir == "asc") {
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              break;
+            }
+          } else if (dir == "desc") {
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              break;
+            }
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+          switchcount++;
+        } else {
+          if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+          }
+        }
+      }
+    }
+
+
+
+  </script>
+</body>
+
+</html>
